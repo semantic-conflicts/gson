@@ -1,21 +1,26 @@
+
+sudo: required
 language: java
 
 jdk:
-  - oraclejdk7
-  - oraclejdk8
+  - openjdk8
 
-install: mvn -f gson install -DskipTests=true
-script: mvn -f gson test
+script:
+  - mvn clean compile package assembly:single -DskipTests
 
-branches:
-  except:
-    - gh-pages
-
-notifications:
-  email: false
-
-sudo: false
-
-cache:
-  directories:
-    - $HOME/.m2
+before_deploy:
+    - mkdir MiningBuild
+    - find . -name '*.jar' -exec cp {} ./MiningBuild \;
+    - cd /home/travis/build/semantic-conflicts/gson/MiningBuild
+    - tar -zcvf result.tar.gz *
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: result.tar.gz
+  name: fetchjar-0f66f4fac441f7d7d7bc4afc907454f3fe4c0faa
+  file_glob: true
+  overwrite: true
+  skip_cleanup: true
+  on:
+    all_branches: true 
+            
