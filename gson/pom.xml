@@ -219,15 +219,18 @@
         </configuration>
       </plugin>
       <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.5.5</version>
-        <configuration>
-          <descriptor>assembly-descriptor.xml</descriptor>
-          <finalName>google-gson-${project.version}</finalName>
-          <outputDirectory>target/dist</outputDirectory>
-          <workDirectory>target/assembly/work</workDirectory>
-        </configuration>
-      </plugin>
+		<artifactId>maven-assembly-plugin</artifactId> 
+		<configuration> 
+		<archive> 
+		<manifest> 
+			<mainClass>fully.qualified.MainClass</mainClass> 
+		</manifest> 
+		</archive> 
+		<descriptorRefs> 
+			<descriptorRef>jar-with-dependencies</descriptorRef> 
+		</descriptorRefs> 
+		</configuration> 
+	   </plugin> 
     </plugins>
   </build>
   <developers>
